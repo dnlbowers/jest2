@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-const {game, newGame} = require("../game");
+const {game, newGame, showScore} = require("../game");
 
 beforeAll(() => {
     let fs = require("fs");
@@ -39,6 +39,7 @@ describe("newGame works correctly", () => {
         game.score = 42;
         game.playerMoves = ["button1", "button2"]
         game.currentGame = ["button1", "button2"]
+        document.getElementById("score").innerText = "42";
         newGame();
     });
     
@@ -47,10 +48,15 @@ describe("newGame works correctly", () => {
     });
 
     test("should clear the history of the playerMoves array", () => {
-        expect(game.playerMoves.length).toEqual(0);
+        expect(game.playerMoves.length).toBe(0);
     });
-
+    // toString.Equal or toBe both work on these two
     test("should clear the history of the currentGame array", () => {
         expect(game.currentGame.length).toEqual(0);
     });
+
+    test("should display zero for the element with the ID of score", () => {
+        expect(document.getElementById("score").innerText).toEqual(0);
+    });
+
 });
