@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-const {game, newGame, showScore} = require("../game");
+const {game, newGame, showScore, addTurn} = require("../game");
 
 beforeAll(() => {
     let fs = require("fs");
@@ -51,8 +51,12 @@ describe("newGame works correctly", () => {
         expect(game.playerMoves.length).toBe(0);
     });
     // toString.Equal or toBe both work on these two
-    test("should clear the history of the currentGame array", () => {
-        expect(game.currentGame.length).toEqual(0);
+    // test("should clear the history of the currentGame array", () => {
+    //     expect(game.currentGame.length).toEqual(0);
+    // });
+
+    test("should add one move to the computer's game array", () => {
+        expect(game.currentGame.length).toBe(1);
     });
 
     test("should display zero for the element with the ID of score", () => {
@@ -60,3 +64,4 @@ describe("newGame works correctly", () => {
     });
 
 });
+
