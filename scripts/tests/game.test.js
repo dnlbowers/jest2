@@ -29,6 +29,10 @@ describe("game object contains the correct keys", () => {
         expect("choices" in game).toBe(true);
     });
 
+    test("turnNumber key exist", () => {
+        expect("turnNumber" in game).toBe(true);
+    })
+
     test("choices contains correct button IDs", () => {
         expect(game.choices).toEqual(["button1", "button2", "button3", "button4"]);
     })
@@ -40,6 +44,7 @@ describe("newGame works correctly", () => {
         game.playerMoves = ["button1", "button2"]
         game.currentGame = ["button1", "button2"]
         document.getElementById("score").innerText = "42";
+        game.turnNumber = 42;
         newGame();
     });
     
@@ -62,6 +67,17 @@ describe("newGame works correctly", () => {
     test("should display zero for the element with the ID of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);
     });
+
+    test("resets turnNumber to zero", () => {
+        expect(game.turnNumber).toBe(0);
+    })
+
+    test("expect data-listener to be true", () => {
+        const elements = document.getElementsByClassName("circle");
+        for (let element of elements) {
+            expect(element.getAttribute("data-listener")).toEqual("true");
+        }
+    })
 
 });
 

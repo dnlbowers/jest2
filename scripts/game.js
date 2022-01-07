@@ -3,12 +3,25 @@ const game = {
     currentGame: [],
     playerMoves: [],
     choices: ["button1", "button2", "button3", "button4"],
+    turnNumber: 0,
 }
 
 function newGame(){
     game.score = 0;
     game.playerMoves = [];
     game.currentGame = [];
+    game.turnNumber = 0;
+    for (let circle of document.getElementsByClassName("circle")) {
+        if (circle.getAttribute("data-listener") !== "true") {
+            circle.addEventListener("click", (e) => {
+                let move = e.target.getAttribute("id");
+                lightsOn(move);
+                game.playerMoves.push(move);
+                playerTurn();            
+            });
+            circle.setAttribute("data-listener", "true");      
+        };
+    };
     showScore();
     addTurn();
 }
