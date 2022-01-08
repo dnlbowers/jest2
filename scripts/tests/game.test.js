@@ -3,6 +3,8 @@
  */
 const {game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn} = require("../game");
 
+jest.spyOn(window, "alert").mockImplementation(() => { });
+
 beforeAll(() => {
     let fs = require("fs");
     let fileContents = fs.readFileSync("index.html", "utf-8");
@@ -117,4 +119,22 @@ describe("game play works correct", () => {
         playerTurn();
         expect(game.score).toBe(1);
     })
+
+    test("should call an alert if wrong move made", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong Move!");
+    });
+
+    test("gameInProgress shows as true during computer turn", () => {
+        showTurns();
+        expect(game.turnInProgress).toEqual(true);
+    })
+
+    test("clicking during the computer sequence should fail", () => {
+        showTurns();
+        game.lastButton = "";
+        document.getElementById("button2").click();
+        expect(game.lastButton).toEqual("");
+    });
 }); 
